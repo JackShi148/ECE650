@@ -75,15 +75,16 @@ void query1(connection *C,
                 sql << " AND ";
             }
             if(i < 4) {
-                sql << stat_name[i] << " >= " << min_attrs_int[i]
-                    << " AND " << stat_name[i] << " <= " << max_attrs_int[i];
+                sql << "(" << stat_name[i] << " BETWEEN " << min_attrs_int[i]
+                    << " AND " << max_attrs_int[i] << ")";
             }
             else {
-                sql << stat_name[i] << " >= " << min_attrs_double[i]
-                    << " AND " << stat_name[i] << " <= " << max_attrs_double[i];
+                sql << "(" << stat_name[i] << " BETWEEN " << min_attrs_double[i-4]
+                    << " AND " << max_attrs_double[i-4] << ")";               
             }
         }
     }
+    sql << ";";
     result res(curNonTrans.exec(sql.str()));
     cout << fixed << setprecision(1);
     cout << "PLAYER_ID TEAM_ID UNIFORM_NUM FIRST_NAME LAST_NAME MPG PPG RPG APG SPG BPG" << endl;
